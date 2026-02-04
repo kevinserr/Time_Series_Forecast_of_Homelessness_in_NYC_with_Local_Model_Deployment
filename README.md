@@ -17,8 +17,7 @@ This project uses two primary New York City government datasets to examine the r
 ## Data Source 1: NYC Department of City Planning (DCP) – Housing Database
 
 **Source:**
-NYC Department of City Planning, Housing Project-Level Database
-[https://www.nyc.gov/content/planning/pages/resources/datasets/housing-project-level#overview](https://www.nyc.gov/content/planning/pages/resources/datasets/housing-project-level#overview)
+[NYC Department of City Planning, Housing Project-Level Database](https://www.nyc.gov/content/planning/pages/resources/datasets/housing-project-level#overview)
 
 **Purpose and Use:**
 This dataset serves as the **primary source for demolition activity** in New York City. It will be filtered to isolate **completed residential demolitions** and categorized by ownership type in order to distinguish between:
@@ -51,8 +50,7 @@ The cleaned demolition data will be aggregated by time (monthly) and used as an 
 ## Data Source 2: NYC Department of Homeless Services (DHS) – Data Dashboard
 
 **Source:**
-NYC Department of Homeless Services, DHS Data Dashboard
-[https://data.cityofnewyork.us/Social-Services/DHS-Data-Dashboard/5e9h-x6ak/about_data](https://data.cityofnewyork.us/Social-Services/DHS-Data-Dashboard/5e9h-x6ak/about_data)
+[NYC Department of Homeless Services, DHS Data Dashboard](https://data.cityofnewyork.us/Social-Services/DHS-Data-Dashboard/5e9h-x6ak/about_data)
 
 **Purpose and Use:**
 This dataset provides **monthly homelessness trends** and is used to evaluate whether changes in shelter populations align with demolition activity over time. It supports validation of the project’s central research question by identifying patterns and shifts in the number of individuals experiencing homelessness.
@@ -99,12 +97,12 @@ This project uses publicly available datasets provided by New York City agencies
 
 **Data Sources:**
 - **NYC Department of City Planning (DCP) – Housing Database**  
-  Source: https://www.nyc.gov/content/planning/pages/resources/datasets/housing-project-level  
-  License: NYC Open Data Terms of Use (Open Data)
+  [NYC Department of City Planning, Housing Project-Level Database](https://www.nyc.gov/content/planning/pages/resources/datasets/housing-project-level#overview)
+  <br>License: NYC Open Data Terms of Use (Open Data)
 
 - **NYC Department of Homeless Services (DHS) – Data Dashboard**  
-  Source: https://data.cityofnewyork.us/Social-Services/DHS-Data-Dashboard/5e9h-x6ak  
-  License: NYC Open Data Terms of Use (Open Data)
+  [NYC Department of Homeless Services, DHS Data Dashboard](https://data.cityofnewyork.us/Social-Services/DHS-Data-Dashboard/5e9h-x6ak/about_data) 
+  <br>License: NYC Open Data Terms of Use (Open Data)
 
 - **Affordable Housing Reference Pages**  
   Sources include Housing Connect (HPD/HDC), MOPD, HUD, and NYCHA official websites.  
