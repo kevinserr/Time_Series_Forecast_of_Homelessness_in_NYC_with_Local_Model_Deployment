@@ -1,4 +1,4 @@
-MonthDate,Job_Number,Job_TypeID,Ownership_ID,Boro,DateFiled,DateComplt,time_of_completion
+month_date,job_number,job_typeid,ownership_id,borough,date_filed,date_completed,time_of_completion
 2016-06-01,220357655,1,1,Bronx,2014-03-17,2016-06-23,829
 2016-08-01,220357664,1,1,Bronx,2014-03-17,2016-08-17,884
 2019-05-01,220359270,1,1,Bronx,2014-02-27,2019-05-01,1889
