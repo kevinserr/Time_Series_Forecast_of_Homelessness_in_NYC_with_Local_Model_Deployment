@@ -5,9 +5,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # %%
-# LOADIND RAW DATA
-demo_raw=pd.read_csv("../data/HousingDB_post2010.csv")
-homeless_raw=pd.read_csv("../data/DHS_Data_Dashboard.csv")
+# PATH TO DEMOLITION AND HOMELESS DATA (add to your own path)
+demolition_path = "/Users/beans/Desktop/TeamHousing/data/HousingDB_post2010.csv"
+homeless_path = "/Users/beans/Desktop/TeamHousing/data/DHS_Data_Dashboard.csv"
+
+demo_raw=pd.read_csv(demolition_path)
+homeless_raw=pd.read_csv(homeless_path)
 
 
 # %%
@@ -330,16 +333,26 @@ fact_demolitions['borough'] = fact_demolitions['borough'].astype('string')
 # all of the tables for the SQL, two dim, two fact
 #display(fact_demolitions.head(),unique_ownership.head(),unique_jobtype.head(), homeless_eda.head())
 
-unique_jobtype.to_csv("../data/processed/dim_jobtype.csv",index=False)
-unique_ownership.to_csv("../data/processed/dim_ownership.csv",index=False)
-fact_demolitions.to_csv("../data/processed/fact_demolitions.csv",index=False)
-homeless_eda.to_csv("../data/processed/fact_shelter.csv",index=False)
+# PATHS TO PROCESSED DIMENSION/FACT TABLES
+processed_jobtypedim = "/Users/beans/Desktop/TeamHousing/data/processed/dim_jobtype.csv"
+processed_ownershipdim = "/Users/beans/Desktop/TeamHousing/data/processed/dim_ownership.csv"
+processed_fact_demolitions = "/Users/beans/Desktop/TeamHousing/data/processed/fact_demolitions.csv"
+processed_homeless_eda = "/Users/beans/Desktop/TeamHousing/data/processed/fact_shelter.csv"
+
+
+unique_jobtype.to_csv(processed_jobtypedim,index=False)
+unique_ownership.to_csv(processed_ownershipdim,index=False)
+fact_demolitions.to_csv(processed_fact_demolitions,index=False)
+homeless_eda.to_csv(processed_homeless_eda,index=False)
 
 # %%
 # CONNECTING TO DATABASE AND IMPORTING DATA
 import sqlite3
 
-conn = sqlite3.connect('../data/processed/nyc_demolitions.db')
+
+# PATH TO DATABASE
+databasepath = "/Users/beans/Desktop/TeamHousing/data/processed/nyc_demolitions.db"
+conn = sqlite3.connect(databasepath)
 
 # LOADING CSV DATA
 # using if_exists append to remain with same schema
