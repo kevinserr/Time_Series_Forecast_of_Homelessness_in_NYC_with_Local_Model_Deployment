@@ -96,48 +96,22 @@ borough_summary = (
 
 print(borough_summary)
 
-# # Count demolitions by borough and ownership type
-# demo_counts = (
-#     fact_owner_demo
-#     .groupby(['borough', 'ownership_type','job_type'])
-#     .size()
-#     .reset_index(name='num_demolitions')
-# )
 
-# print(demo_counts)
+plot_df = (
+    affordable_by_borough[['pct_affordable_demolished']]
+    .merge(
+        private_by_borough[['pct_private_demolished']],
+        left_index=True,
+        right_index=True
+    )
+)
 
-# demo_pivot = (
-#     fact_owner_demo
-#     .groupby(['borough', 'ownership_type','job_type'])
-#     .size()
-#     .unstack(fill_value=0)
-# )
+plt.figure()
+plot_df.plot(kind='bar')
+plt.ylabel('Percent of Housing Demolished')
+plt.xlabel('Borough')
+plt.title('Share of Housing Demolished by Borough and Ownership Type')
+plt.legend(['Affordable / Non-Private', 'Private'])
+plt.tight_layout()
+plt.show()
 
-# demo_pivot['Total'] = demo_pivot.sum(axis=1)
-# demo_pivot['Private_pct'] = demo_pivot['Private'] / demo_pivot['Total']
-# demo_pivot['Affordable_pct'] = demo_pivot['Affordable'] / demo_pivot['Total']
-
-# print(demo_pivot)
-
-
-
-# job_By_Borough = (fact_owner_demo.groupby(['borough','private'])['job_number'].count()
-#                   .reset_index()
-#                   .sort_values(by='job_number', ascending=True))
-
-# # plot showing number of demolitions by borough and ownership type
-# sns.barplot(
-#     data=job_By_Borough, 
-#     x='borough', 
-#     y='job_number', 
-#     hue='private'
-# )
-
-# plt.title('Job Numbers by Borough and Ownership Category')
-# plt.xlabel('Borough')
-# plt.ylabel('Count of Job Numbers')
-# plt.legend(title='Ownership Type')
-
-# plt.xticks(rotation=45)
-
-# plt.show()
