@@ -6,8 +6,8 @@ import seaborn as sns
 
 # %%
 # PATH TO DEMOLITION AND HOMELESS DATA (add to your own path)
-demolition_path = "/Users/Marcy_Student/TeamHousing/data/HousingDB_post2010.csv"
-homeless_path = "/Users/Marcy_Student/TeamHousing/data/DHS_Data_Dashboard.csv"
+demolition_path = "/Users/beans/Desktop/TeamHousing/data/HousingDB_post2010.csv"
+homeless_path = "/Users/beans/Desktop/TeamHousing/data/DHS_Data_Dashboard.csv"
 
 demo_raw=pd.read_csv(demolition_path)
 homeless_raw=pd.read_csv(homeless_path)
@@ -314,7 +314,7 @@ fact_demolitions = fact_demolitions.drop(columns={'ownership_clean','Job_Type'},
 boromap = {1:'Manhattan',2:'Bronx',3:'Brooklyn',4:'Queens',5:'Staten Island'}
 fact_demolitions['Boro'] = fact_demolitions['Boro'].map(boromap)
 
-fact_demolitions = fact_demolitions[['MonthDate','Job_Number','Job_TypeID','Ownership_ID','Boro','DateFiled','DateComplt','time_of_completion']]
+fact_demolitions = fact_demolitions[['MonthDate','BIN','Job_TypeID','Ownership_ID','Boro','DateFiled','DateComplt','time_of_completion']]
 
 
 # changing format of times to not include days
@@ -333,7 +333,6 @@ unique_jobtype.columns = map(str.lower, unique_jobtype.columns)
 unique_ownership.columns = map(str.lower, unique_ownership.columns)
 
 # fixing datatypes to avoid errors when inserting into SQL table
-fact_demolitions['job_number'] = fact_demolitions['job_number'].astype('string')
 fact_demolitions['borough'] = fact_demolitions['borough'].astype('string')
 
 
@@ -341,10 +340,10 @@ fact_demolitions['borough'] = fact_demolitions['borough'].astype('string')
 #display(fact_demolitions.head(),unique_ownership.head(),unique_jobtype.head(), homeless_eda.head())
 
 # PATHS TO PROCESSED DIMENSION/FACT TABLES
-processed_jobtypedim = "/Users/Marcy_Student/TeamHousing/data/processed/dim_jobtype.csv"
-processed_ownershipdim = "/Users/Marcy_Student/TeamHousing/data/processed/dim_ownership.csv"
-processed_fact_demolitions = "/Users/Marcy_Student/TeamHousing/data/processed/fact_demolitions.csv"
-processed_homeless_eda = "/Users/Marcy_Student/TeamHousing/data/processed/fact_shelter.csv"
+processed_jobtypedim = "/Users/beans/Desktop/TeamHousing/data/processed/dim_jobtype.csv"
+processed_ownershipdim = "/Users/beans/Desktop/TeamHousing/data/processed/dim_ownership.csv"
+processed_fact_demolitions = "/Users/beans/Desktop/TeamHousing/data/processed/fact_demolitions.csv"
+processed_homeless_eda = "/Users/beans/Desktop/TeamHousing/data/processed/fact_shelter.csv"
 
 
 unique_jobtype.to_csv(processed_jobtypedim,index=False)
@@ -358,7 +357,7 @@ import sqlite3
 
 
 # PATH TO DATABASE
-databasepath = "/Users/Marcy_Student/TeamHousing/data/processed/nyc_demolitions.db"
+databasepath = "/Users/beans/Desktop/TeamHousing/data/processed/nyc_demolitions.db"
 conn = sqlite3.connect(databasepath)
 
 # LOADING CSV DATA
@@ -369,5 +368,7 @@ fact_demolitions.to_sql('fact_demolitions', conn, if_exists='append',index=False
 homeless_eda.to_sql('fact_shelters', conn, if_exists='append',index=False)
 
 conn.close()
+
+
 
 
