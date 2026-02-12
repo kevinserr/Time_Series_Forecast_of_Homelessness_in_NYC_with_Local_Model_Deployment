@@ -6,8 +6,8 @@ import seaborn as sns
 
 # %%
 # PATH TO DEMOLITION AND HOMELESS DATA (add to your own path)
-demolition_path = "/Users/beans/Desktop/TeamHousing/data/HousingDB_post2010.csv"
-homeless_path = "/Users/beans/Desktop/TeamHousing/data/DHS_Data_Dashboard.csv"
+demolition_path = "/Users/Marcy_Student/TeamHousing/data/HousingDB_post2010.csv"
+homeless_path = "/Users/Marcy_Student/TeamHousing/data/DHS_Data_Dashboard.csv"
 
 demo_raw=pd.read_csv(demolition_path)
 homeless_raw=pd.read_csv(homeless_path)
@@ -25,7 +25,7 @@ homeless_raw['Report Date'] = pd.to_datetime(
 # ## 1. Demolition Data (DCP Housing Dataset)
 # 
 # ### Required Fields
-# - **Job_Number**
+# - **BIN**
 # - **Job_Type**
 #   - Keep only: *Demolition*, *New Building*
 # - **DateFiled** and **DateComplt**
@@ -200,13 +200,17 @@ demo_eda['housing_affordability_proxy'] = (
     demo_eda['ownership_clean']
     .apply(classify_affordability)
 )
+# ------------------------------------------------------------------
+# 6. Dropping BIN duplicates
+# ------------------------------------------------------------------
+demo_eda = demo_eda.drop_duplicates(subset='BIN')
 
 # ------------------------------------------------------------------
-# 6. Keep EDA-relevant fields
+# 7. Keep EDA-relevant fields
 # ------------------------------------------------------------------
 demo_eda = demo_eda[
     [
-        'Job_Number',
+        'BIN',
         'Job_Type',
         'MonthDate',
         'DateFiled',
@@ -278,6 +282,9 @@ homeless_eda = homeless_eda[
 # removing periods and commas from shelter_count and convering to integer
 homeless_eda['shelter_count'] = homeless_eda['shelter_count'].str.replace('.','').str.replace(',','').astype(int)
 
+# %%
+# checking BIN count
+demo_eda['BIN'].count()
 # %% [markdown]
 # # CREATING FACT / DIM TABLE FOR STAR SCHEMA
 
@@ -296,7 +303,7 @@ unique_jobtype = pd.DataFrame({'Job_TypeID': [1,2], 'Job_Type':demo_eda['Job_Typ
 unique_jobtype
 
 # MERGE BACK TO FACT TABLE
-fact_demolitions = demo_eda[['Job_Number','Job_Type','ownership_clean','Boro','MonthDate','DateFiled','DateComplt','time_of_completion']]
+fact_demolitions = demo_eda[['BIN','Job_Type','ownership_clean','Boro','MonthDate','DateFiled','DateComplt','time_of_completion']]
 fact_demolitions['ownership_clean'] = fact_demolitions['ownership_clean'].apply(lambda x: x.split(':')[0])
 fact_demolitions['ownership_clean'] = fact_demolitions['ownership_clean'].apply(lambda x: x.split(',')[0])
 fact_demolitions = fact_demolitions.merge(unique_ownership[['Ownership_ID','ownership_clean']],on='ownership_clean',how='left')
@@ -334,10 +341,10 @@ fact_demolitions['borough'] = fact_demolitions['borough'].astype('string')
 #display(fact_demolitions.head(),unique_ownership.head(),unique_jobtype.head(), homeless_eda.head())
 
 # PATHS TO PROCESSED DIMENSION/FACT TABLES
-processed_jobtypedim = "/Users/beans/Desktop/TeamHousing/data/processed/dim_jobtype.csv"
-processed_ownershipdim = "/Users/beans/Desktop/TeamHousing/data/processed/dim_ownership.csv"
-processed_fact_demolitions = "/Users/beans/Desktop/TeamHousing/data/processed/fact_demolitions.csv"
-processed_homeless_eda = "/Users/beans/Desktop/TeamHousing/data/processed/fact_shelter.csv"
+processed_jobtypedim = "/Users/Marcy_Student/TeamHousing/data/processed/dim_jobtype.csv"
+processed_ownershipdim = "/Users/Marcy_Student/TeamHousing/data/processed/dim_ownership.csv"
+processed_fact_demolitions = "/Users/Marcy_Student/TeamHousing/data/processed/fact_demolitions.csv"
+processed_homeless_eda = "/Users/Marcy_Student/TeamHousing/data/processed/fact_shelter.csv"
 
 
 unique_jobtype.to_csv(processed_jobtypedim,index=False)
@@ -351,7 +358,7 @@ import sqlite3
 
 
 # PATH TO DATABASE
-databasepath = "/Users/beans/Desktop/TeamHousing/data/processed/nyc_demolitions.db"
+databasepath = "/Users/Marcy_Student/TeamHousing/data/processed/nyc_demolitions.db"
 conn = sqlite3.connect(databasepath)
 
 # LOADING CSV DATA
