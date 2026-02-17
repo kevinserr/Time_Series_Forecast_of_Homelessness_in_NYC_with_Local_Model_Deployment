@@ -16,7 +16,7 @@ fact_owner_demo = pd.read_sql_query(query, conn)
 
 # Filter to Affordable housing only
 affordable_only = fact_owner_demo[
-    fact_owner_demo['ownership_id'] != 1
+    fact_owner_demo['ownership_id'] == 3
 ]
 
 # Count total affordable jobs
@@ -65,7 +65,7 @@ affordable_by_borough = (
     fact_owner_demo[fact_owner_demo['is_private'] == False]
     .groupby('borough')
     .agg(
-        total_affordable_jobs=('job_number', 'count'),
+        total_affordable_jobs=('job_typeid', 'count'),
         affordable_demolitions=('is_demolition', 'sum')
     )
 )
@@ -79,7 +79,7 @@ private_by_borough = (
     fact_owner_demo[fact_owner_demo['is_private'] == True]
     .groupby('borough')
     .agg(
-        total_private_jobs=('job_number', 'count'),
+        total_private_jobs=('job_typeid', 'count'),
         private_demolitions=('is_demolition', 'sum')
     )
 )
