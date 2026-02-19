@@ -5,7 +5,6 @@
 Using government and non-profit owned housing as a proxy for affordability, is variation in the monthly counts of demolition job records predictive of changes in New York City’s shelter population over time, accounting for seasonality, from 2015 to 2024?\
 ## Hypothesis  
 We hypothesize that higher monthly counts of public housing demolition job records will be predictive of increases in the NYC shelter population, potentially with a lag of several months.\
-Below is a polished, README-ready version that keeps an analyst / student tone and clearly documents data provenance, structure, and intended use.
 
 
 ## Data Sources Overview
