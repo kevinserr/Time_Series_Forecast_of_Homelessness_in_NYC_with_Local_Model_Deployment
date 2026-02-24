@@ -122,8 +122,7 @@ demo_eda = demo_eda[
     (demo_eda['ResidFlag'] == 'Residential') &
     (demo_eda['NonresFlag'].isna()) &
     (demo_eda['DateFiled'].notna()) &
-    (demo_eda['DateComplt'].notna()) &
-    (demo_eda['DateComplt'].dt.year.between(2016, 2022))
+    (demo_eda['DateComplt'].notna())
 ]
 
 # ------------------------------------------------------------------
@@ -244,8 +243,7 @@ homeless_eda['Report Date'] = pd.to_datetime(
 # 3. Filter to study period (already monthly aggregated)
 # ------------------------------------------------------------------
 homeless_eda = homeless_eda[
-    (homeless_eda['Report Date'].notna()) &
-    (homeless_eda['Report Date'].dt.year.between(2016, 2022))
+    (homeless_eda['Report Date'].notna())
 ]
 
 # ------------------------------------------------------------------
