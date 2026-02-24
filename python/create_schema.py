@@ -122,8 +122,7 @@ demo_eda = demo_eda[
     (demo_eda['ResidFlag'] == 'Residential') &
     (demo_eda['NonresFlag'].isna()) &
     (demo_eda['DateFiled'].notna()) &
-    (demo_eda['DateComplt'].notna()) &
-    (demo_eda['DateComplt'].dt.year.between(2016, 2022))
+    (demo_eda['DateComplt'].notna())
 ]
 
 # ------------------------------------------------------------------
