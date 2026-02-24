@@ -266,6 +266,8 @@ homeless_eda = homeless_eda[
     ]
 ]
 
+homeless_eda = homeless_eda.drop_duplicates(subset=['Report Date'])
+
 # ============================================================
 # FINAL EDA DATASETS
 # ============================================================
