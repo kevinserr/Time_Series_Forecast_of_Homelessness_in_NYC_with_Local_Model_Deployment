@@ -243,8 +243,7 @@ homeless_eda['Report Date'] = pd.to_datetime(
 # 3. Filter to study period (already monthly aggregated)
 # ------------------------------------------------------------------
 homeless_eda = homeless_eda[
-    (homeless_eda['Report Date'].notna()) &
-    (homeless_eda['Report Date'].dt.year.between(2016, 2022))
+    (homeless_eda['Report Date'].notna())
 ]
 
 # ------------------------------------------------------------------
