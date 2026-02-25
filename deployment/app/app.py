@@ -54,9 +54,9 @@ test_exog = exog.iloc[train_size:]
 # ---------------------------------------------------
 @st.cache_resource
 def load_models():
-    arima = joblib.load(open("../pickles/arima_model.pkl", "rb"))
-    sarima = joblib.load(open("../pickles/sarima_model.pkl", "rb"))
-    sarimax = joblib.load(open("../pickles/sarimax_model.pkl", "rb"))
+    arima = joblib.load(open("../data/arima_model.pkl", "rb"))
+    sarima = joblib.load(open("../data/sarima_model.pkl", "rb"))
+    sarimax = joblib.load(open("../data/sarimax_model.pkl", "rb"))
     return arima, sarima, sarimax
 
 arima_model, sarima_model, sarimax_model = load_models()
