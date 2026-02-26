@@ -121,7 +121,7 @@ Meet the team behind this project and their core technical contributions.
 **Project Manager**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/thevinceperez/)
-[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](#)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/vrpperez7)
 
 **Contributions**
 - Database Schema Design
@@ -136,7 +136,7 @@ Meet the team behind this project and their core technical contributions.
 **Data Analyst**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/thomas-segal-093370369/)
-[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](#)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/Commit-Thomas)
 
 **Contributions**
 - Data Cleaning, Filtering and Validation
@@ -151,7 +151,7 @@ Meet the team behind this project and their core technical contributions.
 **Data Analyst & Visualization**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/kevin-serrano-lopez/)
-[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](#)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/kevinserr)
 
 **Contributions**
 - Data Validation
