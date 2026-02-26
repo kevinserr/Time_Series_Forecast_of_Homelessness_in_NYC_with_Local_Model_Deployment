@@ -106,6 +106,24 @@ This project uses publicly available datasets provided by New York City agencies
 
 All datasets remain the property of their respective agencies. This project is for educational and analytical purposes and does not claim ownership over the source data.
 
+## Graphs
+
+## 📊 Average Shelter Counts by Year (2016–2023)
+
+<img width="701" height="661" alt="avg_shelter_countByYear" src="https://github.com/user-attachments/assets/b03125d7-f9c1-49c5-82ef-6df62b87e270" />
+
+**Figure 1.** Annual average shelter population trends in New York City from 2016 through 2023.
+
+### 🔎 Key Insights
+- Shelter populations declined steadily between 2016 and 2019.
+- A significant decrease occurred between 2020 and 2021, reaching the lowest average shelter count during the study period.
+- The decline aligns with pandemic-era disruptions and emergency housing interventions.
+- Shelter demand began increasing again in 2022.
+- A sharp surge occurred in 2023, representing the highest recorded average shelter population and indicating increased housing instability.
+
+
+
+
 ## 👥 Project Team
 
 Meet the team behind this project and their core technical contributions.
