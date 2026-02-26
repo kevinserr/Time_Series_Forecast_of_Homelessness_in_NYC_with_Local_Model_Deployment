@@ -1,6 +1,5 @@
 # Open Door Plan 🏙️
 ## By team: Keys to the City 
-[Vincent Perez](https://www.linkedin.com/in/thevinceperez/), [Thomas Segal](https://www.linkedin.com/in/thomas-segal-093370369/) and [Kevin Serrano Lopez](https://www.linkedin.com/in/kevin-serrano-lopez/)
 ## Critical Research Question (CRQ)
 Using government and non-profit owned housing as a proxy for affordability, is variation in the monthly counts of demolition job records predictive of changes in New York City’s shelter population over time, accounting for seasonality, from 2015 to 2024?
 ## Hypothesis  
@@ -107,6 +106,61 @@ This project uses publicly available datasets provided by New York City agencies
 
 All datasets remain the property of their respective agencies. This project is for educational and analytical purposes and does not claim ownership over the source data.
 
+## 👥 Project Team
 
+Meet the team behind this project and their core technical contributions.
+
+---
+
+<table>
+<tr>
+
+<td align="center" width="33%">
+
+### 👨🏻‍💻 Vincent Perez  
+**Project Manager**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/thevinceperez/)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](#)
+
+**Contributions**
+- Database Schema Design
+- Database Development & Implementation
+- Model Training
+
+</td>
+
+<td align="center" width="33%">
+
+### 📊 Thomas Segal  
+**Data Analyst**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/thomas-segal-093370369/)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](#)
+
+**Contributions**
+- Data Cleaning, Filtering and Validation
+- Hypothesis Testing
+- Statistical Analysis
+
+</td>
+
+<td align="center" width="33%">
+
+### 📈 Kevin Serrano Lopez  
+**Data Analyst & Visualization**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/kevin-serrano-lopez/)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](#)
+
+**Contributions**
+- Data Validation
+- Exploratory Data Analysis (EDA)
+- Dashboard Development
+
+</td>
+
+</tr>
+</table>
 
 
