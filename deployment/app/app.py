@@ -2,130 +2,148 @@ import streamlit as st
 import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics import mean_squared_error
+import plotly.graph_objects as go
 
 # ---------------------------------------------------
 # 1️⃣ PAGE SETUP
 # ---------------------------------------------------
-st.set_page_config(page_title="Time Series Model Comparison", layout="wide")
-st.title("Time Series Forecast Comparison (2016–2022, 80/20 Split)")
+st.set_page_config(page_title="SARIMAX Forecast App", layout="wide")
+st.title("SARIMAX Forecast with Multiple Exogenous Models")
 
 # ---------------------------------------------------
-# 2️⃣ LOAD + FILTER DATA
+# 2️⃣ LOAD DATA
 # ---------------------------------------------------
 @st.cache_data
 def load_data():
     data = pd.read_csv("../../data/processed/fact_shelter.csv")
     exog = pd.read_csv("../data/datedf.csv")
 
-    # Convert to datetime
     data["report_date"] = pd.to_datetime(data["report_date"])
     exog["month_date"] = pd.to_datetime(exog["month_date"])
 
-    # Set index
     data = data.set_index("report_date").sort_index()
     exog = exog.set_index("month_date").sort_index()
 
-    # Filter 2016–2022
     data = data.loc["2016-01-01":"2022-12-31"]
     exog = exog.loc["2016-01-01":"2022-12-31"]
 
     return data, exog
 
 data, exog = load_data()
-
-# Select your target column explicitly
-target = data  # <- Replace with actual column name
-
-# Keep exogenous as DataFrame
-exog = exog[['covid_dummy']]
+target = data.squeeze()
 
 # ---------------------------------------------------
-# 3️⃣ 80 / 20 TRAIN TEST SPLIT
+# 3️⃣ SIDEBAR TOGGLES (RESTORED ORIGINAL VERSION)
+# ---------------------------------------------------
+st.sidebar.header("Exogenous Variables")
+st.sidebar.info(
+    "Select which exogenous variables to include in the forecast.\n"
+    "The app will automatically choose the correct SARIMAX model."
+)
+
+use_covid = st.sidebar.checkbox("Include covid_dummy", value=True)
+use_affordable = st.sidebar.checkbox("Include affordable_demo", value=True)
+
+exog_cols = ['covid_dummy', 'affordable_demo']
+
+with st.sidebar.expander("What are these exogenous variables?"):
+    st.markdown("""
+**covid_dummy**  
+Binary variable indicating months affected by COVID-19 disruptions.  
+Used to capture structural breaks and abnormal demand shifts.
+
+**affordable_demo**  
+Indicator related to affordable housing demolitions.  
+
+These variables allow the SARIMAX model to adjust forecasts based on 
+external shocks and policy influences.
+""")
+
+# ---------------------------------------------------
+# 4️⃣ TRAIN / TEST SPLIT
 # ---------------------------------------------------
 train_size = int(len(target) * 0.8)
 train = target.iloc[:train_size]
 test = target.iloc[train_size:]
 
-train_exog = exog.iloc[:train_size]
-test_exog = exog.iloc[train_size:]
+train_exog = exog[exog_cols].iloc[:train_size].copy()
+test_exog = exog[exog_cols].iloc[train_size:].copy()
 
 # ---------------------------------------------------
-# 4️⃣ LOAD PICKLED FITTED MODELS
+# 5️⃣ LOAD THE CORRECT SARIMAX MODEL
 # ---------------------------------------------------
-@st.cache_resource
-def load_models():
-    arima = joblib.load(open("../data/arima_model.pkl", "rb"))
-    sarima = joblib.load(open("../data/sarima_model.pkl", "rb"))
-    sarimax = joblib.load(open("../data/sarimax_model.pkl", "rb"))
-    return arima, sarima, sarimax
-
-arima_model, sarima_model, sarimax_model = load_models()
-
-# ---------------------------------------------------
-# 5️⃣ FORECAST FUNCTION
-# ---------------------------------------------------
-def forecast_model(model_name):
-    if model_name == "ARIMA":
-        forecast = arima_model.get_forecast(steps=len(test)).predicted_mean
-    elif model_name == "SARIMA":
-        forecast = sarima_model.get_forecast(steps=len(test)).predicted_mean
-    elif model_name == "SARIMAX":
-        forecast = sarimax_model.get_forecast(steps=len(test), exog=test_exog).predicted_mean
+def load_model_by_exog(covid: bool, affordable: bool):
+    if covid and affordable:
+        filename = "../data/sarimax_both.pkl"
+    elif covid and not affordable:
+        filename = "../data/sarimax_covid.pkl"
+    elif not covid and affordable:
+        filename = "../data/sarimax_aff.pkl"
     else:
-        raise ValueError("Unknown model name")
-    return forecast
+        filename = "../data/sarimax_none.pkl"
+    return joblib.load(open(filename, "rb"))
+
+@st.cache_resource
+def get_model(covid, affordable):
+    return load_model_by_exog(covid, affordable)
+
+sarimax_model = get_model(use_covid, use_affordable)
 
 # ---------------------------------------------------
-# 6️⃣ PLOT FUNCTION
+# 6️⃣ PREPARE EXOG FOR FORECAST
 # ---------------------------------------------------
-from sklearn.metrics import mean_squared_error
-import numpy as np
-
-def plot_results(model_name):
-    forecast = forecast_model(model_name)
-
-    # Ensure all series are pandas Series with proper names
-    train_series = train.squeeze().rename("Train")
-    test_series = test.squeeze().rename("Test")
-    forecast_series = forecast.squeeze().rename(f"{model_name} Forecast")
-
-    # Compute RMSE using sklearn
-    rmse = np.sqrt(mean_squared_error(test_series.values, forecast_series.values))
-    rmse = round(rmse,2)
-    # Combine into a clean DataFrame for st.line_chart
-    combined_data = pd.concat([train_series, test_series, forecast_series], axis=1)
-    combined_data = combined_data.reindex(train.index.union(test.index))  # align index
-
-    # Streamlit line_chart
-    st.subheader(f"{model_name} Forecast vs Actual (st.line_chart)")
-    st.line_chart(combined_data)
-
-    # Matplotlib plot
-    st.subheader(f"{model_name} Forecast vs Actual (matplotlib)")
-    fig, ax = plt.subplots(figsize=(12,6))
-    ax.plot(train_series.index, train_series.values, label="Train", color="blue")
-    ax.plot(test_series.index, test_series.values, label="Test", color="black")
-    ax.plot(forecast_series.index, forecast_series.values, label=f"{model_name} Forecast", color="red")
-    ax.set_title(f"{model_name} Forecast vs Actual")
-    ax.legend()
-    st.pyplot(fig)
-
-    # Display RMSE below
-    st.write(f"**RMSE for {model_name}:** {rmse} people in shelter counts.")
+expected_cols = sarimax_model.model.exog_names if sarimax_model.model.k_exog > 0 else []
+forecast_exog = test_exog[expected_cols].iloc[:len(test)] if expected_cols else None
 
 # ---------------------------------------------------
-# 7️⃣ BUTTONS
+# 7️⃣ FORECAST
 # ---------------------------------------------------
+forecast_obj = sarimax_model.get_forecast(steps=len(test), exog=forecast_exog)
+forecast = forecast_obj.predicted_mean
+conf_int = forecast_obj.conf_int()
+
+# ---------------------------------------------------
+# 8️⃣ METRICS
+# ---------------------------------------------------
+rmse = np.sqrt(mean_squared_error(test.values, forecast.values))
+rmse = round(rmse, 2)
+
+# ---------------------------------------------------
+# 9️⃣ INTERACTIVE PLOT WITH PLOTLY
+# ---------------------------------------------------
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=train.index, y=train.values, mode='lines', name='Train'))
+fig.add_trace(go.Scatter(x=test.index, y=test.values, mode='lines', name='Test'))
+fig.add_trace(go.Scatter(x=forecast.index, y=forecast.values, mode='lines', name='Forecast'))
+
+fig.update_layout(
+    title="SARIMAX Forecast (1,0,0) (1,1,0,12)",
+    xaxis_title="Date",
+    yaxis_title="Shelter Count"
+)
+
+# ---------------------------------------------------
+# 🔟 DISPLAY METRICS + PLOT
+# ---------------------------------------------------
+col1, col2 = st.columns([1,2])
+col1.metric("RMSE", rmse)
+col2.plotly_chart(fig, use_container_width=True)
+
+# ---------------------------------------------------
+# 1️⃣1️⃣ MODEL SUMMARY
+# ---------------------------------------------------
+with st.expander("View SARIMAX Model Summary"):
+    st.text(sarimax_model.summary())
+
+# ---------------------------------------------------
+# DOWNLOAD FORECAST + KPI CARDS
+# ---------------------------------------------------
+forecast_df = pd.DataFrame({
+    "forecast": forecast.values,
+}, index=forecast.index)
+
 col1, col2, col3 = st.columns(3)
-
-with col1:
-    if st.button("ARIMA"):
-        plot_results("ARIMA")
-
-with col2:
-    if st.button("SARIMA"):
-        plot_results("SARIMA")
-
-with col3:
-    if st.button("SARIMAX"):
-        plot_results("SARIMAX")
+col1.metric("Train Size", len(train))
+col3.metric("Test Size", len(test))
