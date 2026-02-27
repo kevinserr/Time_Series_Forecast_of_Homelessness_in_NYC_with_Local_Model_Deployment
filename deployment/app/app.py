@@ -128,7 +128,7 @@ fig.update_layout(
 # 🔟 DISPLAY METRICS + PLOT
 # ---------------------------------------------------
 col1, col2 = st.columns([1,2])
-col1.metric("RMSE", rmse)
+col1.metric("RMSE", round(rmse), "Average Error in Predicted Shelter Count")
 col2.plotly_chart(fig, use_container_width=True)
 
 # ---------------------------------------------------
