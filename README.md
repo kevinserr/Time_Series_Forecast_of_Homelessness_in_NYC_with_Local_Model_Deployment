@@ -340,7 +340,8 @@ Explore our full interactive visualization and analysis dashboard below:
 
 This dashboard provides interactive visualizations of shelter population trends, demolition activity, construction patterns, and key exploratory findings used throughout this analysis.
 
-<img width="1420" height="800" alt="Screenshot 2026-03-01 at 11 42 46 PM" src="https://github.com/user-attachments/assets/9df5c1b6-26ef-4eb6-92ea-01e898fc64be" />
+
+<img width="1361" height="669" alt="Screenshot 2026-03-02 at 9 15 12 AM" src="https://github.com/user-attachments/assets/1e4e3608-bc45-4724-a0b6-8600a1e763d1" />
 
 
 
