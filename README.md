@@ -1,4 +1,4 @@
-# Open Door Plan 🏙️
+# Open Door Plan 
 ## By team: Keys to the City 
 
 ## Executive Summary
@@ -138,7 +138,7 @@ A structured analytical workflow was used:
 
 ## Exploratory Findings
 
-## 📊 Average Shelter Counts by Year (2016–2023)
+## Average Shelter Counts by Year (2016–2023)
 
 <img width="701" height="661" alt="avg_shelter_countByYear" src="https://github.com/user-attachments/assets/b03125d7-f9c1-49c5-82ef-6df62b87e270" />
 
