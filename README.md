@@ -1,5 +1,19 @@
 # Open Door Plan 🏙️
 ## By team: Keys to the City 
+
+## Executive Summary
+This project investigates whether demolition of government and non-profit owned residential buildings — used as a proxy for affordable housing — is predictive of changes in New York City’s shelter population from 2016 to 2022.
+Using publicly available NYC government datasets, we:
+- Built a cleaned relational database
+- Conducted statistical testing on demolition patterns
+- Engineered monthly time-series features
+- Implemented SARIMAX forecasting models
+- Evaluated model performance using AIC, BIC, and RMSE
+
+While affordable demolitions occur at statistically significant rates, our results indicate they do not meaningfully predict shelter population fluctuations at the citywide monthly level.
+Instead, shelter population dynamics appear to be driven primarily by macro-level shocks and policy interventions — particularly during COVID-19 and post-2022 migration inflows.
+This project demonstrates both the value and the limitations of system-level administrative data when studying housing displacement and homelessness.
+
 ## Critical Research Question (CRQ)
 Using government and non-profit owned housing as a proxy for affordability, is variation in the monthly counts of demolition job records predictive of changes in New York City’s shelter population over time, accounting for seasonality, from 2015 to 2024?
 ## Hypothesis  
