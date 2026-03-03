@@ -2,6 +2,8 @@ streamlit==1.51.0
 pandas==2.2.3
 numpy==1.26.4
 matplotlib==3.10.0
-statsmodels==0.14.5
 scikit-learn==1.7.2
+statsmodels==0.14.5
 joblib==1.5.2
+plotly==6.2.0
+scipy==1.15.3
